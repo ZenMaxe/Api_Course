@@ -27,7 +27,8 @@ class User_Module:
             name=name,
             username=username,
             password=hashed_password,
-            email=email
+            email=email,
+            comments=0
         )
         db.session.add(new_user)
         db.session.commit()

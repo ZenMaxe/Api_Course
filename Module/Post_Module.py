@@ -14,7 +14,8 @@ class Post_Module:
             new_post = Posts(
                 from_user=user.id,
                 caption=caption,
-                name=user.name or user.username
+                name=user.name or user.username,
+                comments =0
             )
             db.session.add(new_post)
             db.session.commit()
@@ -76,7 +77,8 @@ class Post_Module:
                 final_text = "".join(posts_from_id)
                 return final_text
         except:
-            pass
+            text = "Wrong..."
+            return text
 
     def likes_from_post(self):
         pass

@@ -1,14 +1,15 @@
 import json
 
-import flask
 from flask import request
 
 from app import app
 from Module.User_Module import User_Module
 from Module.Post_Module import Post_Module
+from Module.Comment_Module import Comment_Module
 
 user_module = User_Module()
 post_module = Post_Module()
+comment_module = Comment_Module()
 
 
 @app.route('/login', methods=['GET'])
@@ -132,3 +133,28 @@ def all_posts():
 def user_posts(user_id):
     result = post_module.get_all_posts_from_id(user_id)
     return json.dumps(result)
+
+
+@app.route('/posts/<post_id>/c', methods=['GET'])
+def post_comments(post_id):
+    res = comment_module.comments_from_post(post_id)
+    return json.dumps(res)
+
+
+@app.route('/posts/<post_id>/c', methods=['POST'])
+def create_comment(post_id):
+    data = json.loads(request.data)
+    comment = data.get('comment')
+    username = data.get('username')
+    password = data.get('password')
+    result = comment_module.write_comment(comment, username, password, post_id)
+    return json.dumps(result)
+
+@app.route('/posts/<post_id>/c', methods=['DELETE'])
+def delete_comment(post_id):
+    pass
+
+
+@app.route('/posts/<post_id>/c', methods=['PUT'])
+def edit_comment(post_id):
+    pass
